@@ -4,7 +4,7 @@ import {
   Plus, Search, Edit2, Trash2, ShieldAlert, LayoutGrid, List, 
   CheckCircle2, Clock, Calendar, Users, DollarSign, ChevronDown, ChevronUp,
   Building2, Sparkles, Layers, Briefcase, ArrowRight, X, Workflow, CheckSquare,
-  Shield, UserCheck, Zap, TrendingUp, Target, BarChart3, FolderOpen
+  Shield, UserCheck, Zap, TrendingUp, Target, BarChart3, FolderOpen, Film
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { canPerform } from '../../services/rbac';
@@ -680,7 +680,16 @@ export default function Projects() {
                               </div>
                             )}
 
-                            <div className="text-center pt-1">
+                            <div className="flex items-center justify-between gap-2 pt-2 border-t" style={{ borderColor: '#f1f5f9' }}>
+                              <button
+                                type="button"
+                                onClick={() => navigate('/digital-marketing', { state: { clientId: p.client, clientName: p.client_name, openReport: true } })}
+                                className="btn-warning-custom cursor-pointer"
+                                style={{ fontSize: '10.5px', padding: '5px 10px', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+                                title="Open Social Deliverables & Ads Push Report"
+                              >
+                                <Film size={12} /> Deliverables &amp; Ads Report
+                              </button>
                               <button
                                 type="button"
                                 onClick={() => toggleCard(p.id)}

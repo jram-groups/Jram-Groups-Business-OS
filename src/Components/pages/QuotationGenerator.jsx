@@ -16,7 +16,7 @@ export default function QuotationGenerator() {
   const [loadingClients, setLoadingClients] = useState(false);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('form'); // 'form' | 'preview' for mobile
-  const [zoom, setZoom] = useState(0.85);
+  const [zoom, setZoom] = useState(0.75);
 
   // Collapsible cards state
   const [openCards, setOpenCards] = useState({
@@ -476,7 +476,7 @@ export default function QuotationGenerator() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[#f9f4e3] text-[#1a1508] font-['Inter',sans-serif] overflow-hidden">
+    <div className="qg-root h-screen flex flex-col bg-[#f9f4e3] text-[#1a1508] font-['Inter',sans-serif] overflow-hidden">
       {/* ── TOP HEADER ── */}
       <header className="h-[54px] bg-[#0a0a0a] flex items-center justify-between px-4 sm:px-6 z-30 border-b-2 border-[#f5c400] flex-shrink-0">
         <div className="flex items-center gap-3">
@@ -523,14 +523,14 @@ export default function QuotationGenerator() {
       <div className="md:hidden h-10 bg-[#1a1508] flex flex-shrink-0 border-b border-amber-950/40">
         <button
           onClick={() => setActiveTab('form')}
-          className={`flex-1 flex items-center justify-center gap-1.5 font-bold text-xs transition-all ${activeTab === 'form' ? 'text-[#f5c400] border-b-2 border-[#f5c400]' : 'text-white/50'
+          className={`qg-tab-pill flex-1 flex items-center justify-center gap-1.5 font-bold text-xs transition-all ${activeTab === 'form' ? 'active text-[#f5c400]' : 'text-white/50'
             }`}
         >
           📝 Form Editor
         </button>
         <button
           onClick={() => setActiveTab('preview')}
-          className={`flex-1 flex items-center justify-center gap-1.5 font-bold text-xs transition-all ${activeTab === 'preview' ? 'text-[#f5c400] border-b-2 border-[#f5c400]' : 'text-white/50'
+          className={`qg-tab-pill flex-1 flex items-center justify-center gap-1.5 font-bold text-xs transition-all ${activeTab === 'preview' ? 'active text-[#f5c400]' : 'text-white/50'
             }`}
         >
           👁 A4 Preview
@@ -540,22 +540,22 @@ export default function QuotationGenerator() {
       {/* ── WORKSPACE ── */}
       <div className="flex flex-1 min-h-0 overflow-hidden">
         {/* ── LEFT FORM PANEL ── */}
-        <div className={`w-full md:w-[430px] md:min-w-[340px] md:max-w-[430px] bg-white border-r border-[#e8d98a] flex flex-col h-full overflow-hidden ${activeTab === 'preview' ? 'hidden md:flex' : 'flex'
+        <div className={`w-full md:w-[480px] md:min-w-[380px] md:max-w-[480px] bg-white border-r border-[#e8d98a] flex flex-col h-full overflow-hidden ${activeTab === 'preview' ? 'hidden md:flex' : 'flex'
           }`}>
           {/* Scrollable Form Body */}
-          <div className="flex-1 overflow-y-auto p-3.5 space-y-3 scrollbar-thin">
+          <div className="qg-scrollbar flex-1 overflow-y-auto p-3.5 space-y-3">
             {/* CARD 1: Company Information */}
             <div className="border border-[#e8d98a] rounded-xl overflow-hidden bg-white shadow-2xs">
               <div
                 onClick={() => toggleCard('company')}
-                className="flex items-center gap-2 p-2.5 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
+                className="qg-card-header flex items-center gap-2.5 p-3 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
               >
-                <div className="w-6 h-6 bg-[#f5c400] rounded grid place-items-center text-xs">🏢</div>
-                <div className="font-bold text-xs text-[#0a0a0a] flex-1">Company Information</div>
-                <ChevronDown size={14} className={`text-[#8a7830] transition-transform ${openCards.company ? '' : '-rotate-90'}`} />
+                <div className="w-7 h-7 bg-[#f5c400] rounded-lg grid place-items-center text-sm shadow-sm">🏢</div>
+                <div className="font-bold text-[13px] text-[#0a0a0a] flex-1">Company Information</div>
+                <ChevronDown size={15} className={`text-[#8a7830] transition-transform duration-200 ${openCards.company ? '' : '-rotate-90'}`} />
               </div>
               {openCards.company && (
-                <div className="p-3 space-y-2.5 text-xs">
+                <div className="qg-accordion-body p-3 space-y-2.5 text-xs">
                   <div>
                     <label className="text-[9.5px] font-bold text-[#8a7830] uppercase tracking-wider block mb-1">Company Logo</label>
                     {logoUrl ? (
@@ -623,14 +623,14 @@ export default function QuotationGenerator() {
             <div className="border border-[#e8d98a] rounded-xl overflow-hidden bg-white shadow-2xs">
               <div
                 onClick={() => toggleCard('client')}
-                className="flex items-center gap-2 p-2.5 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
+                className="qg-card-header flex items-center gap-2.5 p-3 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
               >
-                <div className="w-6 h-6 bg-[#f5c400] rounded grid place-items-center text-xs">👤</div>
-                <div className="font-bold text-xs text-[#0a0a0a] flex-1">Client Information</div>
-                <ChevronDown size={14} className={`text-[#8a7830] transition-transform ${openCards.client ? '' : '-rotate-90'}`} />
+                <div className="w-7 h-7 bg-[#f5c400] rounded-lg grid place-items-center text-sm shadow-sm">👤</div>
+                <div className="font-bold text-[13px] text-[#0a0a0a] flex-1">Client Information</div>
+                <ChevronDown size={15} className={`text-[#8a7830] transition-transform duration-200 ${openCards.client ? '' : '-rotate-90'}`} />
               </div>
               {openCards.client && (
-                <div className="p-3 space-y-2.5 text-xs">
+                <div className="qg-accordion-body p-3 space-y-2.5 text-xs">
                   {/* Select from CRM Clients Dropdown */}
                   <div>
                     <label className="text-[9.5px] font-bold text-[#8a7830] uppercase block mb-0.5 flex items-center justify-between">
@@ -690,14 +690,14 @@ export default function QuotationGenerator() {
             <div className="border border-[#e8d98a] rounded-xl overflow-hidden bg-white shadow-2xs">
               <div
                 onClick={() => toggleCard('details')}
-                className="flex items-center gap-2 p-2.5 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
+                className="qg-card-header flex items-center gap-2.5 p-3 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
               >
-                <div className="w-6 h-6 bg-[#f5c400] rounded grid place-items-center text-xs">📄</div>
-                <div className="font-bold text-xs text-[#0a0a0a] flex-1">Quotation Details</div>
-                <ChevronDown size={14} className={`text-[#8a7830] transition-transform ${openCards.details ? '' : '-rotate-90'}`} />
+                <div className="w-7 h-7 bg-[#f5c400] rounded-lg grid place-items-center text-sm shadow-sm">📄</div>
+                <div className="font-bold text-[13px] text-[#0a0a0a] flex-1">Quotation Details</div>
+                <ChevronDown size={15} className={`text-[#8a7830] transition-transform duration-200 ${openCards.details ? '' : '-rotate-90'}`} />
               </div>
               {openCards.details && (
-                <div className="p-3 space-y-2.5 text-xs">
+                <div className="qg-accordion-body p-3 space-y-2.5 text-xs">
                   <div className="grid grid-cols-3 gap-2">
                     <div>
                       <label className="text-[9.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Quote #</label>
@@ -737,138 +737,136 @@ export default function QuotationGenerator() {
             <div className="border border-[#e8d98a] rounded-xl overflow-hidden bg-white shadow-2xs">
               <div
                 onClick={() => toggleCard('items')}
-                className="flex items-center gap-2 p-2.5 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
+                className="qg-card-header flex items-center gap-2.5 p-3 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
               >
-                <div className="w-6 h-6 bg-[#f5c400] rounded grid place-items-center text-xs">📦</div>
-                <div className="font-bold text-xs text-[#0a0a0a] flex-1">Services &amp; Products</div>
-                <ChevronDown size={14} className={`text-[#8a7830] transition-transform ${openCards.items ? '' : '-rotate-90'}`} />
+                <div className="w-7 h-7 bg-[#f5c400] rounded-lg grid place-items-center text-sm shadow-sm">📦</div>
+                <div className="font-bold text-[13px] text-[#0a0a0a] flex-1">Services &amp; Products</div>
+                <span className="bg-[#0a0a0a] text-[#f5c400] text-[9px] font-bold px-2 py-0.5 rounded-full">{items.length}</span>
+                <ChevronDown size={15} className={`text-[#8a7830] transition-transform duration-200 ${openCards.items ? '' : '-rotate-90'}`} />
               </div>
               {openCards.items && (
-                <div className="p-3 space-y-3 text-xs">
-                  <div className="overflow-x-auto border border-[#e8d98a] rounded-lg">
-                    <table className="w-full text-[11px] border-collapse min-w-[340px]">
-                      <thead className="bg-[#fff8d6]">
-                        <tr className="border-b border-[#e8d98a] text-[9px] font-bold text-[#8a7830] uppercase">
-                          <th className="p-1.5 text-left">Item</th>
-                          <th className="p-1.5 text-left">Description</th>
-                          <th className="p-1.5 text-center w-12">Qty</th>
-                          <th className="p-1.5 text-right w-20">Unit Price</th>
-                          <th className="p-1.5 text-right w-20">Total</th>
-                          <th className="p-1.5 w-6 text-center"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {items.map(it => (
-                          <tr key={it.id} className="border-b border-[#f9f4e3] last:border-b-0">
-                            <td className="p-1">
-                              <input
-                                className="w-full px-1.5 py-1 text-[11px] border border-[#e8d98a] rounded bg-[#fdf9ee]"
-                                placeholder="Service name"
-                                value={it.name}
-                                onChange={e => handleUpdateItem(it.id, 'name', e.target.value)}
-                              />
-                            </td>
-                            <td className="p-1">
-                              <input
-                                className="w-full px-1.5 py-1 text-[11px] border border-[#e8d98a] rounded bg-[#fdf9ee]"
-                                placeholder="Details"
-                                value={it.desc}
-                                onChange={e => handleUpdateItem(it.id, 'desc', e.target.value)}
-                              />
-                            </td>
-                            <td className="p-1 w-12">
-                              <input
-                                type="number"
-                                min="1"
-                                className="w-full px-1 py-1 text-[11px] text-center border border-[#e8d98a] rounded bg-[#fdf9ee]"
-                                value={it.qty}
-                                onChange={e => handleUpdateItem(it.id, 'qty', e.target.value)}
-                              />
-                            </td>
-                            <td className="p-1 w-20">
-                              <input
-                                type="number"
-                                min="0"
-                                className="w-full px-1.5 py-1 text-[11px] text-right font-mono border border-[#e8d98a] rounded bg-[#fdf9ee]"
-                                value={it.price}
-                                onChange={e => handleUpdateItem(it.id, 'price', e.target.value)}
-                              />
-                            </td>
-                            <td className="p-1 w-20 text-right font-mono font-bold text-[10.5px]">
+                <div className="qg-accordion-body p-3 space-y-2.5 text-xs">
+                  {/* Card-based item list */}
+                  <div className="space-y-2">
+                    {items.map((it, idx) => (
+                      <div key={it.id} className="qg-item-card">
+                        <div className="qg-item-number">{idx + 1}</div>
+                        <button
+                          onClick={() => handleRemoveItem(it.id)}
+                          className="qg-item-remove"
+                          title="Remove item"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                        {/* Row 1: Name + Description */}
+                        <div className="grid grid-cols-2 gap-2 mb-2 pl-4">
+                          <div>
+                            <label className="text-[8.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Item / Service</label>
+                            <input
+                              placeholder="Service name"
+                              value={it.name}
+                              onChange={e => handleUpdateItem(it.id, 'name', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[8.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Description</label>
+                            <input
+                              placeholder="Details"
+                              value={it.desc}
+                              onChange={e => handleUpdateItem(it.id, 'desc', e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        {/* Row 2: Qty + Price + Total */}
+                        <div className="grid grid-cols-3 gap-2 pl-4">
+                          <div>
+                            <label className="text-[8.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Qty</label>
+                            <input
+                              type="number"
+                              min="1"
+                              className="text-center"
+                              value={it.qty}
+                              onChange={e => handleUpdateItem(it.id, 'qty', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[8.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Unit Price</label>
+                            <input
+                              type="number"
+                              min="0"
+                              className="text-right font-mono"
+                              value={it.price}
+                              onChange={e => handleUpdateItem(it.id, 'price', e.target.value)}
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[8.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Total</label>
+                            <div className="py-1.5 px-2 bg-[#fff8d6] rounded-md text-right font-mono font-bold text-[11px] text-[#0a0a0a] border border-[#e8d98a]">
                               {formatCurrency(it.total)}
-                            </td>
-                            <td className="p-1 text-center">
-                              <button
-                                onClick={() => handleRemoveItem(it.id)}
-                                className="text-slate-400 hover:text-red-600 cursor-pointer p-0.5"
-                                title="Remove row"
-                              >
-                                ✕
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
 
                   <button
                     type="button"
                     onClick={handleAddItem}
-                    className="w-full py-1.5 bg-[#fff8d6] hover:bg-[#fef3b0] border border-dashed border-[#d4c464] rounded-lg text-xs font-bold text-[#4a3d10] flex items-center justify-center gap-1 cursor-pointer transition-all"
+                    className="w-full py-2 bg-[#fff8d6] hover:bg-[#fef3b0] border border-dashed border-[#d4c464] rounded-lg text-xs font-bold text-[#4a3d10] flex items-center justify-center gap-1.5 cursor-pointer transition-all hover:border-[#f5c400] active:scale-[0.98]"
                   >
-                    <Plus size={14} /> Add Row
+                    <Plus size={14} /> Add Item
                   </button>
 
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div className="space-y-2">
-                      <div>
-                        <label className="text-[9.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Tax Rate (%)</label>
-                        <input
-                          type="number"
-                          min="0"
-                          max="100"
-                          step="0.5"
-                          className="form-input text-xs font-mono"
-                          value={taxRate}
-                          onChange={e => setTaxRate(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[9.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Discount Rate (%)</label>
-                        <input
-                          type="number"
-                          min="0"
-                          max="100"
-                          step="0.5"
-                          className="form-input text-xs font-mono"
-                          value={discountRate}
-                          onChange={e => setDiscountRate(e.target.value)}
-                        />
-                      </div>
+                  {/* Tax & Discount — side by side */}
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <div>
+                      <label className="text-[9px] font-bold text-[#8a7830] uppercase block mb-0.5">Tax Rate (%)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="0.5"
+                        className="form-input text-xs font-mono"
+                        value={taxRate}
+                        onChange={e => setTaxRate(e.target.value)}
+                      />
                     </div>
+                    <div>
+                      <label className="text-[9px] font-bold text-[#8a7830] uppercase block mb-0.5">Discount Rate (%)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="0.5"
+                        className="form-input text-xs font-mono"
+                        value={discountRate}
+                        onChange={e => setDiscountRate(e.target.value)}
+                      />
+                    </div>
+                  </div>
 
-                    <div className="border border-[#e8d98a] rounded-lg overflow-hidden bg-white text-xs">
-                      <div className="flex justify-between p-1.5 border-b border-[#e8d98a]">
-                        <span className="text-[#4a3d10]">Subtotal</span>
-                        <span className="font-mono font-medium">{formatCurrency(subtotal)}</span>
+                  {/* Totals summary — full width */}
+                  <div className="qg-totals-block">
+                    <div className="qg-total-row">
+                      <span className="text-[#4a3d10]">Subtotal</span>
+                      <span className="font-mono font-medium">{formatCurrency(subtotal)}</span>
+                    </div>
+                    {discountAmount > 0 && (
+                      <div className="qg-total-row text-emerald-700">
+                        <span>Discount ({discountRate}%)</span>
+                        <span className="font-mono">-{formatCurrency(discountAmount)}</span>
                       </div>
-                      {discountAmount > 0 && (
-                        <div className="flex justify-between p-1.5 border-b border-[#e8d98a] text-emerald-700">
-                          <span>Discount ({discountRate}%)</span>
-                          <span className="font-mono">-{formatCurrency(discountAmount)}</span>
-                        </div>
-                      )}
-                      {taxAmount > 0 && (
-                        <div className="flex justify-between p-1.5 border-b border-[#e8d98a]">
-                          <span className="text-[#4a3d10]">Tax ({taxRate}%)</span>
-                          <span className="font-mono">{formatCurrency(taxAmount)}</span>
-                        </div>
-                      )}
-                      <div className="flex justify-between p-2 bg-[#0a0a0a] text-white">
-                        <span className="font-bold">Grand Total</span>
-                        <span className="font-mono font-extrabold text-[#f5c400] text-sm">{formatCurrency(grandTotal)}</span>
+                    )}
+                    {taxAmount > 0 && (
+                      <div className="qg-total-row">
+                        <span className="text-[#4a3d10]">Tax ({taxRate}%)</span>
+                        <span className="font-mono">{formatCurrency(taxAmount)}</span>
                       </div>
+                    )}
+                    <div className="qg-total-row qg-grand-total">
+                      <span>Grand Total</span>
+                      <span>{formatCurrency(grandTotal)}</span>
                     </div>
                   </div>
                 </div>
@@ -879,14 +877,14 @@ export default function QuotationGenerator() {
             <div className="border border-[#e8d98a] rounded-xl overflow-hidden bg-white shadow-2xs">
               <div
                 onClick={() => toggleCard('notes')}
-                className="flex items-center gap-2 p-2.5 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
+                className="qg-card-header flex items-center gap-2.5 p-3 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
               >
-                <div className="w-6 h-6 bg-[#f5c400] rounded grid place-items-center text-xs">📝</div>
-                <div className="font-bold text-xs text-[#0a0a0a] flex-1">Notes &amp; Terms &amp; Conditions</div>
-                <ChevronDown size={14} className={`text-[#8a7830] transition-transform ${openCards.notes ? '' : '-rotate-90'}`} />
+                <div className="w-7 h-7 bg-[#f5c400] rounded-lg grid place-items-center text-sm shadow-sm">📝</div>
+                <div className="font-bold text-[13px] text-[#0a0a0a] flex-1">Notes &amp; Terms &amp; Conditions</div>
+                <ChevronDown size={15} className={`text-[#8a7830] transition-transform duration-200 ${openCards.notes ? '' : '-rotate-90'}`} />
               </div>
               {openCards.notes && (
-                <div className="p-3 space-y-2.5 text-xs">
+                <div className="qg-accordion-body p-3 space-y-2.5 text-xs">
                   <div>
                     <label className="text-[9.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Customer Notes</label>
                     <textarea
@@ -913,14 +911,14 @@ export default function QuotationGenerator() {
             <div className="border border-[#e8d98a] rounded-xl overflow-hidden bg-white shadow-2xs">
               <div
                 onClick={() => toggleCard('signature')}
-                className="flex items-center gap-2 p-2.5 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
+                className="qg-card-header flex items-center gap-2.5 p-3 bg-[#fff8d6] border-b border-[#e8d98a] cursor-pointer select-none"
               >
-                <div className="w-6 h-6 bg-[#f5c400] rounded grid place-items-center text-xs">✍️</div>
-                <div className="font-bold text-xs text-[#0a0a0a] flex-1">Signature Block</div>
-                <ChevronDown size={14} className={`text-[#8a7830] transition-transform ${openCards.signature ? '' : '-rotate-90'}`} />
+                <div className="w-7 h-7 bg-[#f5c400] rounded-lg grid place-items-center text-sm shadow-sm">✍️</div>
+                <div className="font-bold text-[13px] text-[#0a0a0a] flex-1">Signature Block</div>
+                <ChevronDown size={15} className={`text-[#8a7830] transition-transform duration-200 ${openCards.signature ? '' : '-rotate-90'}`} />
               </div>
               {openCards.signature && (
-                <div className="p-3 space-y-2.5 text-xs">
+                <div className="qg-accordion-body p-3 space-y-2.5 text-xs">
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <label className="text-[9.5px] font-bold text-[#8a7830] uppercase block mb-0.5">Client Signatory Name</label>
@@ -947,7 +945,7 @@ export default function QuotationGenerator() {
           </div>
 
           {/* Action Footer Bar */}
-          <div className="p-3 bg-[#0a0a0a] border-t-2 border-[#f5c400] space-y-2 flex-shrink-0">
+          <div className="qg-action-footer p-3 bg-[#0a0a0a] border-t-2 border-[#f5c400] space-y-2 flex-shrink-0">
             <button
               onClick={handleDownloadPDF}
               className="w-full py-2 bg-[#f5c400] hover:bg-[#e6b800] text-[#0a0a0a] font-extrabold text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-md shadow-[#f5c400]/40 transition-all cursor-pointer"
@@ -986,11 +984,11 @@ export default function QuotationGenerator() {
               ◉ A4 Live Document Preview
             </span>
             <div className="flex items-center bg-white/10 border border-white/15 rounded-md overflow-hidden text-xs">
-              {[0.5, 0.7, 0.85, 1.0].map(z => (
+              {[0.5, 0.65, 0.75, 0.85, 1.0].map(z => (
                 <button
                   key={z}
                   onClick={() => setZoom(z)}
-                  className={`px-2.5 py-1 font-mono font-bold transition-all cursor-pointer ${zoom === z ? 'bg-[#f5c400] text-[#0a0a0a]' : 'text-white/60 hover:bg-white/10'
+                  className={`px-2 py-1 font-mono font-bold text-[11px] transition-all cursor-pointer ${zoom === z ? 'bg-[#f5c400] text-[#0a0a0a]' : 'text-white/60 hover:bg-white/10'
                     }`}
                 >
                   {Math.round(z * 100)}%
@@ -1268,7 +1266,7 @@ export default function QuotationGenerator() {
 
       {/* Floating Toast Notification */}
       {toastMsg && (
-        <div className={`fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-full text-xs font-bold shadow-2xl flex items-center gap-2 border transition-all animate-in fade-in slide-in-from-bottom-3 ${toastMsg.isError ? 'bg-red-900 text-white border-red-500' : 'bg-[#0a0a0a] text-white border-[#f5c400]'
+        <div className={`qg-toast fixed bottom-5 left-1/2 z-50 px-5 py-2.5 rounded-full text-xs font-bold shadow-2xl flex items-center gap-2 border ${toastMsg.isError ? 'bg-red-900 text-white border-red-500' : 'bg-[#0a0a0a] text-white border-[#f5c400]'
           }`}>
           {toastMsg.isError ? '✗' : '✓'} {toastMsg.text}
         </div>

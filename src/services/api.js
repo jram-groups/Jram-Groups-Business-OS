@@ -236,7 +236,7 @@ export const api = {
   marketing: {
     listSocialClients: (params = '') => fetchAPI(`/marketing/social-clients/${params ? `?${params}` : ''}`),
     createSocialClient: (data) => fetchAPI('/marketing/social-clients/', { method: 'POST', body: data }),
-    updateSocialClient: (id, data) => fetchAPI(`/marketing/social-clients/${id}/`, { method: 'PUT', body: data }),
+    updateSocialClient: (id, data) => fetchAPI(`/marketing/social-clients/${id}/`, { method: 'PATCH', body: data }),
     deleteSocialClient: (id) => fetchAPI(`/marketing/social-clients/${id}/`, { method: 'DELETE' }),
   },
 
